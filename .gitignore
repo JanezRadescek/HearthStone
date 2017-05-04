@@ -8,3 +8,7 @@ __pycache__
 .DS_Store
 .Rhistory
 .Rproj.user
+.RData
+auth.py
+auth.R
+Thumbs.db
