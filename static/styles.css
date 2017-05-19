@@ -1,0 +1,110 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:900|Fredericka+the+Great|Oswald:700|Vidaloka);
+
+html {
+    font-size: 200%;
+  /* This can be changed and all text will resize! */   
+}
+
+body {
+	background-image: url("/static/img/background.png");
+}
+
+.quote {
+    margin: 2rem auto;  
+    width: 20.5rem;
+}
+
+span {
+    display: block;
+    text-rendering: optimizeLegibility; /* Better kerning, worse performance */
+}
+
+.line1 {
+    font: 2rem/2.5rem 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.35rem;
+    color: #9DE7C5;
+    text-shadow: -4px 3px 0 #424242,
+                      -6px 5px 0 rgba(255,255,255,0.125);
+  /* If I wanted to be extra-fancy, I could also define
+     text-shadows in rems (instead of pixels) to make
+     them resize when the font-size was adjusted */
+}
+
+.line2 {
+    font: 4.25rem/4.5rem 'Oswald', sans-serif;
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: -1px  1px 0 #424242,
+                     -4px  4px 0 #424242, 
+                     -5px  5px 0 rgb(229, 31, 31),     
+                     -6px  6px 0 rgb(229, 31, 31),
+                     -7px  7px 0 rgb(185, 75, 11),
+                     -8px  8px 0 rgb(185, 75, 11),
+                     -9px  9px 0 rgb(255, 204, 0),
+                     -10px 10px 0 rgb(255, 204, 0),
+                     -11px 11px 25px #000;
+}
+
+.line3 {
+    font: 2.45rem/3.45rem 'Vidaloka', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+    color: rgb(135, 207, 87);
+    text-shadow: -2px 2px 5px #000;
+}
+
+.line4 {
+    font: bold 1.5rem/1rem 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    margin-top: 1.25rem;
+    color: #7DDDCE;
+    
+}
+
+.line5 {
+    font: 4.25rem/3.5rem 'Vidaloka', serif;
+    text-align: right;
+    margin-right: 0.5rem;
+    color: #3BDDC4;
+    position: relative;
+}
+
+.line5:after {
+    content: 'enough';
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    filter: blur(5px); /* Unsupported as-is in Firefox */
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.line6 {
+    font: 4.6rem/4.25rem 'Fredericka the Great', cursive;
+    color: #FFF;
+    text-shadow:  0   1px #2b2b2b,
+                 -1px 0   #000,
+                 -1px 2px #2b2b2b,
+                 -2px 1px #000,
+                 -2px 3px #2b2b2b,
+                 -3px 2px #000,
+                 -3px 4px #2b2b2b,
+                 -4px 3px #000,
+                 -4px 5px #2b2b2b,
+                 -5px 4px #000,
+                 -5px 6px #2b2b2b,
+                 -6px 5px #000,
+                 -6px 7px #2b2b2b,
+                 -7px 6px #000,
+                 -7px 8px #2b2b2b,
+                 -8px 7px #000;
+}
+
+cite {
+    font: 0.85rem 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.4rem;
+    color: #222;
+}
