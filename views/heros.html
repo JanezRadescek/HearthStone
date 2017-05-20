@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -7,12 +8,12 @@
     <meta name="author" content="">
 	<link rel="shortcut icon" href="/static/hsicon.ico">
 
-    <title>Heroji</title>
+    <title>Deck</title>
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <!--<link href="/static/styles.css" rel="stylesheet">-->
+    <link href="/static/styles1.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -22,12 +23,18 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<style>
+	
+	<style>
 p.padding {
     padding-top: 2cm;
 }
 </style>
+
+	<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/js/search.js"></script>
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -39,19 +46,43 @@ p.padding {
         </div>
       </div>
     </div>
+
+
+<!-- searchbar -->
+
 <p class="padding">
-  <table cellpadding="0" cellspacing="0" border="1">
-  <tr>
-     <th>Id</th>
-     <th>Ime</th>
-  </tr>
-  %for (id,ime) in heroji:
-    <tr>
-       <td>{{id}}</td>
-       <td>{{ime}}</td>
-    </tr>
-  %end
-  </table>
+<div class="container">
+	<div class="row">
+        <div class="col-md-3">
+            <form action="#" method="get">
+                <div class="input-group">
+                    <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+		<div class="col-md-9">
+    	 <table class="table table-list-search">
+                    <thead>
+                        <tr>
+                            <th><i>Ime</i></th>
+                            <th><i>Id</i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+						%for (id,ime) in heroji:
+                        <tr>
+                            <td>{{ime}}</td>
+                            <td>{{id}}</td>
+                        </tr>
+						%end
+                    </tbody>
+                </table>   
+		</div>
+	</div>
+</div>
 </p>
 </body>
 </html>

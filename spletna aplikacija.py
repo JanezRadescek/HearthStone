@@ -45,13 +45,19 @@ def hero_get():
 
 @get("/cards/")
 def cards_get():
-    """Prikaži formo za hero."""
+    """Prikaži formo za karte."""
     cur.execute("SELECT * FROM karte")
     return template("karte.html",karte = cur)
 
 @get("/deck/")
 def deck_get():
-    """Prikaži formo za hero."""
+    """Prikaži formo za deck."""
+    cur.execute("SELECT * FROM deck")
+    return template("deck.html",deck = cur)
+
+@post("/deck/")
+def deck_give():
+    """Pokaži karte ki jih vsebuje deck"""
     cur.execute("SELECT * FROM deck")
     return template("deck.html",deck = cur)
 
@@ -67,4 +73,4 @@ conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT) # onemo
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
 
 # poženemo strežnik na portu 8080, glej http://localhost:8080/
-run(host='localhost', port=8081)
+run(host='localhost', port=8080)
