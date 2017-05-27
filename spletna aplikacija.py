@@ -52,16 +52,13 @@ def cards_get():
 @get("/deck/")
 def deck_get():
     """Prikaži formo za deck."""
-    cur.execute("SELECT * FROM deck")
-    return template("deck.html",deck = cur)
-
-@post("/deck/")
-def deck_give():
-    """Pokaži karte ki jih vsebuje deck"""
-    cur.execute("SELECT * FROM deck")
-    return template("deck.html",deck = cur)
-
-
+    if 'id' in request.GET.keys():
+        kateri = request.GET['id']
+        cur.execute("Select * from jevdecku Join karte on karta =karte.id WHERE deck = (%s);", [kateri])
+        return template("jevdecku.html",jevdecku = cur)
+    else:
+        cur.execute("SELECT * FROM deck")
+        return template("deck.html",deck = cur)
 
 
 ######################################################################

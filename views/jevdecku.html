@@ -8,7 +8,7 @@
     <meta name="author" content="">
 	<link rel="shortcut icon" href="/static/hsicon.ico">
 
-    <title>Deck</title>
+    <title>Karte</title>
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -68,23 +68,24 @@ p.padding {
                     <thead>
                         <tr>
                             <th><i>Ime</i></th>
-                            <th><i>Avtor</i></th>
-                            <th><i>Id</i></th>
-                            <th>&nbsp;</th>
+                            <th><i>Cena</i></th>
+							<th><i>Tip</i></th>
+							<th><i>Mana</i></th>
+                            <th><i>Expanison</i></th>
+							<th><i>Stevilo</i></th>
+							<th><i>Id</i></th>
                         </tr>
                     </thead>
                     <tbody>
-						%for (id,ime,avtor) in deck:
+						%for (neki,seneki,stevilo,id,ime,cena,tip,mana,expansion) in jevdecku:
                         <tr>
                             <td>{{ime}}</td>
-                            <td>{{avtor}}</td>
+                            <td>{{cena}}</td>
+							<td>{{tip}}</td>
+							<td>{{mana}}</td>
+							<td>{{expansion}}</td>
+							<td>{{stevilo}}</td>
                             <td>{{id}}</td>
-						   <td>
-							<form action="/deck/">
-								<p><input type="hidden" name="id" value="{{id}}"/>
-								<input type="submit" value="View" name="submit"/></p>
-							</form>
-						   </td>
                         </tr>
 						%end
                     </tbody>
