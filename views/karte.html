@@ -68,21 +68,21 @@ p.padding {
                     <thead>
                         <tr>
                             <th><i>Ime</i></th>
-                            <th><i>Cena</i></th>
+                            <th><i>Expanison</i></th>
 							<th><i>Tip</i></th>
 							<th><i>Mana</i></th>
-                            <th><i>Expanison</i></th>
+                            <th><i>Klasa</i></th>
 							<th><i>Id</i></th>
                         </tr>
                     </thead>
                     <tbody>
-						%for (id,ime,cena,tip,mana,expansion) in karte:
+						%for (id,ime,expansion,tip,mana,klasaid,seneki,klasa) in karte:
                         <tr>
                             <td>{{ime}}</td>
-                            <td>{{cena}}</td>
+                            <td>{{expansion}}</td>
 							<td>{{tip}}</td>
 							<td>{{mana}}</td>
-							<td>{{expansion}}</td>
+							<td>{{klasa}}</td>
                             <td>{{id}}</td>
                         </tr>
 						%end

@@ -68,22 +68,22 @@ p.padding {
                     <thead>
                         <tr>
                             <th><i>Ime</i></th>
-                            <th><i>Cena</i></th>
+                            <th><i>Expanison</i></th>
 							<th><i>Tip</i></th>
 							<th><i>Mana</i></th>
-                            <th><i>Expanison</i></th>
+                            <th><i>Class</i></th>
 							<th><i>Stevilo</i></th>
 							<th><i>Id</i></th>
                         </tr>
                     </thead>
                     <tbody>
-						%for (neki,seneki,stevilo,id,ime,cena,tip,mana,expansion) in jevdecku:
+						%for (neki,seneki,stevilo,id,ime,expansion,tip,mana,nekki,nekkki,klasa) in jevdecku:
                         <tr>
                             <td>{{ime}}</td>
-                            <td>{{cena}}</td>
+                            <td>{{expansion}}</td>
 							<td>{{tip}}</td>
 							<td>{{mana}}</td>
-							<td>{{expansion}}</td>
+							<td>{{klasa}}</td>
 							<td>{{stevilo}}</td>
                             <td>{{id}}</td>
                         </tr>

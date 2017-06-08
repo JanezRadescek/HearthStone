@@ -5,7 +5,7 @@
 from bottle import *
 
 # uvozimo ustrezne podatke za povezavo
-import auth as auth
+import auth_public as auth
 
 # uvozimo psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras
@@ -46,7 +46,8 @@ def hero_get():
 @get("/cards/")
 def cards_get():
     """Prikaži formo za karte."""
-    cur.execute("SELECT * FROM karte")
+    #cur.execute("SELECT * FROM karte")
+    cur.execute("Select * from karte Join hero on hero.id = karte.class ;")
     return template("karte.html",karte = cur)
 
 @get("/deck/")
@@ -54,7 +55,7 @@ def deck_get():
     """Prikaži formo za deck."""
     if 'id' in request.GET.keys():
         kateri = request.GET['id']
-        cur.execute("Select * from jevdecku Join karte on karta =karte.id WHERE deck = (%s);", [kateri])
+        cur.execute("Select * from jevdecku Join karte on karta =karte.id Join hero on hero.id = karte.class WHERE deck = (%s);", [kateri])
         return template("jevdecku.html",jevdecku = cur)
     else:
         cur.execute("SELECT * FROM deck")
