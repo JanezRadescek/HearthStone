@@ -67,11 +67,11 @@ def create():
     if 'hero' in request.GET.keys():
         hero = request.GET['hero']
         hero = hero.lower()
-        cur.execute("Select * from karte Join hero on hero.id = karte.class where hero.ime = (%s) or hero.ime = (%s) ;",[hero,'vsi'])
+        cur.execute("Select * from karte Join hero on hero.id = karte.class where hero.ime = (%s) or hero.ime = (%s) ORDER BY karte.ime ASC;",[hero,'vsi'])
         return template("createdeck.html",create = cur,heroj = hero)
     else:
         cur.execute("Select * from hero")
-        return template("createdeck1.html",create = cur,heroj = 'Priest')
+        return template("createdeck1.html",create = cur,napaka = None)
 
 
 @post("/createdeck/")
@@ -94,12 +94,14 @@ def create():
                     if vrednost != "":
                         vrednost = int(vrednost)
                         cur.execute("INSERT INTO jevdecku (karta,deck,stevilo) VALUES ((%s),(%s),(%s));",[indeks,pozicija,vrednost])
-            cur.execute("Select * from deck where ime = (%s)",[ime])
+            return template("deck.html",deck = cur)
         else:
-            pass
-        return template("deck.html",deck = cur)
+            cur.execute("Select * from hero")
+            return template("createdeck1.html",create = cur,napaka = "You must enter a name.")
+        
     except IntegrityError:
-        return template('firstpage.html')
+        cur.execute("Select * from hero")
+        return template("createdeck1.html",create = cur,napaka = "Deck name already exists.")
 
 ######################################################################
 # Glavni program
