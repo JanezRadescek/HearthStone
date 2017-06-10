@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+
+
+<body>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +11,7 @@
     <meta name="author" content="">
 	<link rel="shortcut icon" href="/static/hsicon.ico">
 
-    <title>Karte</title>
+    <title>CreateADeck</title>
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,20 +52,20 @@ p.padding {
     </div>
 
 
+<form action="/createdeck/" method="post">
+  Ime: <input type="text" name="ime">
+  Avtor: <input type="text" name="avtor">
+  <input type="submit">
+
+
+
+
 <!-- searchbar -->
 
 <p class="padding">
 <div class="container">
 	<div class="row">
         <div class="col-md-3">
-            <form action="#" method="get">
-                <div class="input-group">
-                    <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                    </span>
-                </div>
-            </form>
         </div>
 		<div class="col-md-9">
     	 <table class="table table-list-search">
@@ -72,21 +75,24 @@ p.padding {
                             <th><i>Expanison</i></th>
 							<th><i>Tip</i></th>
 							<th><i>Mana</i></th>
-                            <th><i>Class</i></th>
-							<th><i>Stevilo</i></th>
+                            <th><i>Klasa</i></th>
 							<th><i>Id</i></th>
+							<th><i>Stevilo</i></th>
+							
                         </tr>
                     </thead>
                     <tbody>
-						%for (neki,seneki,stevilo,id,ime,expansion,tip,mana,nekki,nekkki,klasa) in jevdecku:
+						%for (id,ime,expansion,tip,mana,klasaid,seneki,klasa) in create:
                         <tr>
                             <td>{{ime}}</td>
                             <td>{{expansion}}</td>
 							<td>{{tip}}</td>
 							<td>{{mana}}</td>
 							<td>{{klasa}}</td>
-							<td>{{stevilo}}</td>
                             <td>{{id}}</td>
+							<td>
+								<input type="number" name="{{id}}" value = 0/>
+							</td>
                         </tr>
 						%end
                     </tbody>
@@ -95,6 +101,9 @@ p.padding {
 	</div>
 </div>
 </p>
+</form>
+
+
 
 </body>
 </html>

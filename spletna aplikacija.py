@@ -8,6 +8,7 @@ from bottle import *
 import auth_public as auth
 
 # uvozimo psycopg2
+from psycopg2 import IntegrityError
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo problemov s šumniki
 
@@ -15,7 +16,6 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 # debug(True)
 
 # Datoteka, v kateri je baza
-baza_datoteka = "fakebook.sqlite"
 
 # Mapa s statičnimi datotekami
 static_dir = "./static"
@@ -61,6 +61,45 @@ def deck_get():
         cur.execute("SELECT * FROM deck")
         return template("deck.html",deck = cur)
 
+@get("/createdeck/")
+def create():
+    """Prikaži formo za naredit deck."""
+    if 'hero' in request.GET.keys():
+        hero = request.GET['hero']
+        hero = hero.lower()
+        cur.execute("Select * from karte Join hero on hero.id = karte.class where hero.ime = (%s) or hero.ime = (%s) ;",[hero,'vsi'])
+        return template("createdeck.html",create = cur,heroj = hero)
+    else:
+        cur.execute("Select * from hero")
+        return template("createdeck1.html",create = cur,heroj = 'Priest')
+
+
+@post("/createdeck/")
+def create():
+    """Prikaži formo za naredit deck."""
+    ime = request.POST['ime']
+    avtor = request.POST['avtor']
+    try:
+        if ime != "" and avtor != "":
+            cur.execute("INSERT INTO deck (ime,avtor) VALUES ((%s),(%s));",[ime,avtor])
+            cur.execute("SELECT id from deck where ime =(%s) and avtor = (%s);",[ime,avtor])
+            a = cur.fetchone()
+            pozicija = int(a[0])
+            for el in request.POST:
+                if el == "ime" or el == "avtor":
+                    pass
+                else:
+                    indeks = int(el)
+                    vrednost = request.POST[el]
+                    if vrednost != "":
+                        vrednost = int(vrednost)
+                        cur.execute("INSERT INTO jevdecku (karta,deck,stevilo) VALUES ((%s),(%s),(%s));",[indeks,pozicija,vrednost])
+            cur.execute("Select * from deck where ime = (%s)",[ime])
+        else:
+            pass
+        return template("deck.html",deck = cur)
+    except IntegrityError:
+        return template('firstpage.html')
 
 ######################################################################
 # Glavni program
