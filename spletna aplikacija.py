@@ -57,6 +57,10 @@ def deck_get():
         kateri = request.GET['id']
         cur.execute("Select * from jevdecku Join karte on karta =karte.id Join hero on hero.id = karte.class WHERE deck = (%s);", [kateri])
         return template("jevdecku.html",jevdecku = cur)
+    if 'q' in request.GET.keys():
+        kaj = request.GET['q']
+        cur.execute("SELECT * FROM deck where ime = (%s)",[kaj])
+        return template("deck.html",deck = cur)
     else:
         cur.execute("SELECT * FROM deck")
         return template("deck.html",deck = cur)
@@ -79,27 +83,41 @@ def create():
     """Prikaži formo za naredit deck."""
     ime = request.POST['ime']
     avtor = request.POST['avtor']
-    try:
+    cur.execute("SELECT 1 FROM deck WHERE ime=(%s) ",[ime])
+    if cur.fetchone() is None:
         if ime != "" and avtor != "":
-            cur.execute("INSERT INTO deck (ime,avtor) VALUES ((%s),(%s));",[ime,avtor])
-            cur.execute("SELECT id from deck where ime =(%s) and avtor = (%s);",[ime,avtor])
-            a = cur.fetchone()
-            pozicija = int(a[0])
+            vsota = 0
             for el in request.POST:
                 if el == "ime" or el == "avtor":
                     pass
                 else:
-                    indeks = int(el)
                     vrednost = request.POST[el]
                     if vrednost != "":
-                        vrednost = int(vrednost)
-                        cur.execute("INSERT INTO jevdecku (karta,deck,stevilo) VALUES ((%s),(%s),(%s));",[indeks,pozicija,vrednost])
-            return template("deck.html",deck = cur)
+                        vsota += int(vrednost)
+            if vsota < 31 and vsota > 14:
+                cur.execute("INSERT INTO deck (ime,avtor) VALUES ((%s),(%s));",[ime,avtor])
+                cur.execute("SELECT id from deck where ime =(%s) and avtor = (%s);",[ime,avtor])
+                a = cur.fetchone()
+                pozicija = int(a[0])
+                for el in request.POST:
+                    if el == "ime" or el == "avtor":
+                        pass
+                    else:
+                        indeks = int(el)
+                        vrednost = request.POST[el]
+                        if vrednost != "":
+                            vrednost = int(vrednost)
+                            cur.execute("INSERT INTO jevdecku (karta,deck,stevilo) VALUES ((%s),(%s),(%s));",[indeks,pozicija,vrednost])
+                cur.execute("select * from deck where id = (%s);",[pozicija])
+                return template("deck.html",deck = cur)
+            else:
+                cur.execute("Select * from hero")
+                return template("createdeck1.html",create = cur,napaka = "You must have between 15 and 30 cards in your deck.")
         else:
             cur.execute("Select * from hero")
             return template("createdeck1.html",create = cur,napaka = "You must enter a name.")
         
-    except IntegrityError:
+    else:
         cur.execute("Select * from hero")
         return template("createdeck1.html",create = cur,napaka = "Deck name already exists.")
 
