@@ -51,7 +51,7 @@ def cards_get():
         kaj = request.GET['q'].lower()
         gledena = request.GET['search']
         if gledena == "id":
-            cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.id) from (%s)) IS NOT NULL;",[kaj])
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.id =(%s);",[kaj])
         elif gledena == "ime":
             cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.ime) from (%s)) IS NOT NULL;",[kaj])
             print(cur.query)
@@ -73,7 +73,7 @@ def deck_get():
         kaj = request.GET['q'].lower()
         gledena = request.GET['search']
         if gledena == "id":
-            cur.execute("SELECT * FROM deck where substring(lower(id) from (%s)) IS NOT NULL",[kaj])
+            cur.execute("SELECT * FROM deck where id = (%s)",[kaj])
         elif gledena == "ime":
             cur.execute("SELECT * FROM deck where substring(lower(ime) from (%s)) IS NOT NULL",[kaj])
         else:
