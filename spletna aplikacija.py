@@ -47,7 +47,19 @@ def hero_get():
 def cards_get():
     """Prikaži formo za karte."""
     #cur.execute("SELECT * FROM karte")
-    cur.execute("Select * from karte Join hero on hero.id = karte.class ;")
+    if 'q' in request.GET.keys():
+        kaj = request.GET['q']
+        gledena = request.GET['search']
+        if gledena == "id":
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.id = (%s);",[kaj])
+        elif gledena == "ime":
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.ime = (%s);",[kaj])
+            print(cur.query)
+        else:
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.class = (%s);",[kaj])
+        return template("karte.html",karte = cur)
+    else:
+        cur.execute("Select * from karte Join hero on hero.id = karte.class ;")
     return template("karte.html",karte = cur)
 
 @get("/deck/")
@@ -59,7 +71,13 @@ def deck_get():
         return template("jevdecku.html",jevdecku = cur)
     if 'q' in request.GET.keys():
         kaj = request.GET['q']
-        cur.execute("SELECT * FROM deck where ime = (%s)",[kaj])
+        gledena = request.GET['search']
+        if gledena == "id":
+            cur.execute("SELECT * FROM deck where id = (%s)",[kaj])
+        elif gledena == "ime":
+            cur.execute("SELECT * FROM deck where ime = (%s)",[kaj])
+        else:
+            cur.execute("SELECT * FROM deck where avtor = (%s)",[kaj])
         return template("deck.html",deck = cur)
     else:
         cur.execute("SELECT * FROM deck")
@@ -71,7 +89,7 @@ def create():
     if 'hero' in request.GET.keys():
         hero = request.GET['hero']
         hero = hero.lower()
-        cur.execute("Select * from karte Join hero on hero.id = karte.class where hero.ime = (%s) or hero.ime = (%s) ORDER BY karte.ime ASC;",[hero,'vsi'])
+        cur.execute("Select * from karte Join hero on hero.id = karte.class where hero.ime = (%s) or hero.ime = (%s) ORDER BY karte.ime ASC;",[hero,'any'])
         return template("createdeck.html",create = cur,heroj = hero)
     else:
         cur.execute("Select * from hero")
@@ -83,7 +101,7 @@ def create():
     """Prikaži formo za naredit deck."""
     ime = request.POST['ime']
     avtor = request.POST['avtor']
-    cur.execute("SELECT 1 FROM deck WHERE ime=(%s) ",[ime])
+    cur.execute("SELECT 1 FROM deck WHERE ime=(%s) and avtor = (%s)",[ime,avtor])
     if cur.fetchone() is None:
         if ime != "" and avtor != "":
             vsota = 0
@@ -119,7 +137,7 @@ def create():
         
     else:
         cur.execute("Select * from hero")
-        return template("createdeck1.html",create = cur,napaka = "Deck name already exists.")
+        return template("createdeck1.html",create = cur,napaka = "This deck name from this author already exists.")
 
 ######################################################################
 # Glavni program

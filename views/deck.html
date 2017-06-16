@@ -27,7 +27,6 @@
 
 	<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
 	<script src="/static/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/static/js/search.js"></script>
 	
 </head>
 <body>
@@ -53,10 +52,17 @@
             <form action="#" method="get">
                 <div class="input-group">
                     <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
-                    <span class="input-group-btn">
+					<span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                    </span>
-                </div>
+					</span>
+					</div>
+					Search by:<br>
+					  <input type="radio" name="search" value="ime" checked="checked"> Name<br>
+					  <input type="radio" name="search" value="avtor"> Author<br>
+					  <input type="radio" name="search" value="id"> Id
+
+
+
             </form>
         </div>
 		<div class="col-md-9">
@@ -84,7 +90,8 @@
                         </tr>
 						%end
                     </tbody>
-                </table>   
+                </table>
+				
 		</div>
 	</div>
 </div>
