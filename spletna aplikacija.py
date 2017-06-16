@@ -48,15 +48,15 @@ def cards_get():
     """Prikaži formo za karte."""
     #cur.execute("SELECT * FROM karte")
     if 'q' in request.GET.keys():
-        kaj = request.GET['q'].lower()
+        kaj = request.GET['q']
         gledena = request.GET['search']
         if gledena == "id":
             cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.id =(%s);",[kaj])
         elif gledena == "ime":
-            cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.ime) from (%s)) IS NOT NULL;",[kaj])
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.ime) from (%s)) IS NOT NULL;",[kaj.lower()])
             print(cur.query)
         else:
-            cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.class) from (%s)) IS NOT NULL;",[kaj])
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.class = (%s);",[kaj])
         return template("karte.html",karte = cur)
     else:
         cur.execute("Select * from karte Join hero on hero.id = karte.class ;")
@@ -70,14 +70,14 @@ def deck_get():
         cur.execute("Select * from jevdecku Join karte on karta =karte.id Join hero on hero.id = karte.class WHERE deck = (%s);", [kateri])
         return template("jevdecku.html",jevdecku = cur)
     if 'q' in request.GET.keys():
-        kaj = request.GET['q'].lower()
+        kaj = request.GET['q']
         gledena = request.GET['search']
         if gledena == "id":
             cur.execute("SELECT * FROM deck where id = (%s)",[kaj])
         elif gledena == "ime":
-            cur.execute("SELECT * FROM deck where substring(lower(ime) from (%s)) IS NOT NULL",[kaj])
+            cur.execute("SELECT * FROM deck where substring(lower(ime) from (%s)) IS NOT NULL",[kaj.lower()])
         else:
-            cur.execute("SELECT * FROM deck where substring(lower(avtor) from (%s)) IS NOT NULL",[kaj])
+            cur.execute("SELECT * FROM deck where substring(lower(avtor) from (%s)) IS NOT NULL",[kaj.lower()])
         return template("deck.html",deck = cur)
     else:
         cur.execute("SELECT * FROM deck")
