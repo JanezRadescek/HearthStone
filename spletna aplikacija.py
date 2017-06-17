@@ -49,14 +49,15 @@ def cards_get():
     #cur.execute("SELECT * FROM karte")
     if 'q' in request.GET.keys():
         kaj = request.GET['q']
-        gledena = request.GET['search']
+        gledena = "ime"
+        if "search" in request.GET:
+            gledena = request.GET['search']
         if gledena == "id":
             cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.id =(%s);",[kaj])
         elif gledena == "ime":
             cur.execute("Select * from karte Join hero on hero.id = karte.class  where substring(lower(karte.ime) from (%s)) IS NOT NULL;",[kaj.lower()])
-            print(cur.query)
         else:
-            cur.execute("Select * from karte Join hero on hero.id = karte.class  where karte.class = (%s);",[kaj])
+            cur.execute("Select * from karte Join hero on hero.id = karte.class  where hero.ime = (%s);",[kaj])
         return template("karte.html",karte = cur)
     else:
         cur.execute("Select * from karte Join hero on hero.id = karte.class ;")
@@ -71,7 +72,9 @@ def deck_get():
         return template("jevdecku.html",jevdecku = cur)
     if 'q' in request.GET.keys():
         kaj = request.GET['q']
-        gledena = request.GET['search']
+        gledena = "ime"
+        if "search" in request.GET:
+            gledena = request.GET['search']
         if gledena == "id":
             cur.execute("SELECT * FROM deck where id = (%s)",[kaj])
         elif gledena == "ime":
